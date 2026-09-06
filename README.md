@@ -18,7 +18,7 @@
 将仓库中的 **`mock-exam` 文件夹**放入代理的 skills 目录。Codex 默认可放在 `~/.codex/skills/mock-exam`；若设置了 CODEX_HOME，则使用其 `skills` 子目录。仓库根目录还包含构建源码和测试，不要把整个仓库当作单个 skill 文件夹。
 
 ```bash
-git clone https://github.com/tianyiwei-lang/mock-exam-skill.git
+git clone https://github.com/uczltw6/mock-exam-skill.git
 ```
 
 安装后重新开启支持发现新 skill 的会话，然后可以这样说：

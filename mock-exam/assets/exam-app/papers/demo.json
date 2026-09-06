@@ -1,0 +1,144 @@
+{
+  "id": "demo",
+  "name": "演示卷",
+  "title": "基础知识与 ACM 编程",
+  "description": "3 道单选、1 道多选和 1 道编程，展示从出题到作答判分的完整流程。",
+  "sourceNote": "本卷全部为原创演示题或同考点改编，不代表任何公司的真实笔试。选择题 10 分，编程 10 分。",
+  "choiceMinutes": 15,
+  "fullMinutes": 30,
+  "questions": [
+    {
+      "id": "1",
+      "topic": "微积分",
+      "source": "预测模拟",
+      "multi": false,
+      "points": 2,
+      "text": "f(x)=x²，在 x=3 处的一阶导数为多少？",
+      "options": [
+        "3",
+        "6",
+        "9",
+        "12"
+      ],
+      "answer": [
+        "B"
+      ],
+      "explanation": "幂函数求导得到 f′(x)=2x，代入 x=3，结果为 6。"
+    },
+    {
+      "id": "2",
+      "topic": "模型评估",
+      "source": "预测模拟",
+      "multi": false,
+      "points": 2,
+      "text": "50 个真实正样本中有 40 个被检出，召回率为多少？",
+      "options": [
+        "20%",
+        "40%",
+        "80%",
+        "无法计算"
+      ],
+      "answer": [
+        "C"
+      ],
+      "explanation": "召回率 TP/(TP+FN)=40/50=80%，不需要假正例数。"
+    },
+    {
+      "id": "3",
+      "topic": "序列与维度",
+      "source": "同考点改编",
+      "multi": false,
+      "points": 2,
+      "text": "一个序列有 6 个位置，每个位置用 3 个数表示。窗口选择相邻位置时，边界应该由什么限制？",
+      "options": [
+        "位置总数 6",
+        "特征维度 3",
+        "batch 数量",
+        "向量最大值"
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "窗口在序列位置之间移动；每个位置对应一整行，特征维度用于行向量内部的计算。"
+    },
+    {
+      "id": "4",
+      "topic": "防止数据泄漏",
+      "source": "预测模拟",
+      "multi": true,
+      "points": 4,
+      "text": "下列哪些做法有助于避免验证数据泄漏？（多选）",
+      "options": [
+        "只用训练折拟合标准化参数",
+        "把测试标签加入训练特征",
+        "时间预测中用过去训练、后续时间段验证",
+        "根据测试结果反复选择超参数"
+      ],
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "预处理参数应由训练数据确定；时间验证要尊重先后关系。使用测试标签或反复在测试集上选模型会污染评估。"
+    }
+  ],
+  "problems": [
+    {
+      "id": "p1",
+      "title": "对称窗口求和",
+      "shortTitle": "对称窗口求和",
+      "source": "原创 ACM 演示题",
+      "sourceType": "预测模拟",
+      "points": 10,
+      "description": "给定长度为 n 的整数序列，输出每个位置的对称窗口内所有数之和。窗口包括自己，以及左右各 radius 个位置。",
+      "rules": [
+        "窗口按序列位置扩展，在两端截断。",
+        "每个位置独立输出一个整数，不修改原序列。"
+      ],
+      "input": "第一行 n 和 radius（1 ≤ n ≤ 100000，0 ≤ radius ≤ n）。第二行 n 个整数，每项绝对值不超过 1000000。",
+      "output": "输出一行 n 个整数，以空格分隔。",
+      "sampleIn": "5 1\n1 2 3 4 5\n",
+      "sampleOut": "3 6 9 12 9",
+      "sampleNote": "位置 0 的窗口为下标 0、1，总和为 3；位置 2 的窗口为下标 1、2、3，总和为 9。",
+      "convention": "时间限制每测试 4 秒。采用 ACM 标准输入输出；不要求类或函数签名。",
+      "explanation": "用前缀和 prefix，区间 [left,right) 的总和是 prefix[right]−prefix[left]。每个位置查询一次，总时间 O(n)。",
+      "reference": "import sys\n\ndef solve(data):\n    nums = list(map(int, data.split()))\n    n, radius = nums[:2]\n    values = nums[2:]\n    prefix = [0]\n    for value in values:\n        prefix.append(prefix[-1] + value)\n    result = []\n    for i in range(n):\n        left = max(0, i - radius)\n        right = min(n, i + radius + 1)\n        result.append(str(prefix[right] - prefix[left]))\n    return ' '.join(result)\n\nprint(solve(sys.stdin.read()))\n",
+      "tests": [
+        {
+          "label": "公开样例",
+          "input": "5 1\n1 2 3 4 5\n",
+          "expected": "3 6 9 12 9"
+        },
+        {
+          "label": "单元素",
+          "input": "1 1\n-7",
+          "expected": "-7"
+        },
+        {
+          "label": "零半径",
+          "input": "4 0\n2 -3 0 5",
+          "expected": "2 -3 0 5"
+        },
+        {
+          "label": "全序列窗口",
+          "input": "3 3\n1 2 3",
+          "expected": "6 6 6"
+        },
+        {
+          "label": "负数与边界",
+          "input": "4 1\n5 -2 7 -3",
+          "expected": "3 10 2 4"
+        },
+        {
+          "label": "大整数",
+          "input": "3 3\n1000000 1000000 1000000",
+          "expected": "3000000 3000000 3000000"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "出题依据：微积分、分类评价、序列索引与数据划分的基础知识"
+    }
+  ]
+}

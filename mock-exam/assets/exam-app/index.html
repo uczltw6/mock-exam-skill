@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mock Exam · 模拟笔试</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="identity"><span class="brand-mark" aria-hidden="true">AI</span><div><strong>Mock Exam · 模拟笔试</strong><small>知识点与往年题驱动 · 本地模拟考场</small></div></div>
+    <div id="header-state" class="header-state"><span class="status-dot"></span> 本地考场</div>
+    <button id="library-top" class="quiet" hidden>试卷库</button>
+    <div id="exam-actions" hidden><button id="fullscreen" class="quiet">全屏</button><button id="submit-top" class="primary">交卷</button></div>
+  </header>
+
+  <main id="app" aria-live="polite"><div class="loading">正在准备考场…</div></main>
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <dialog id="confirm-dialog">
+    <form method="dialog">
+      <span class="eyebrow">交卷确认</span><h2>准备好结束考试了吗？</h2>
+      <p id="submit-summary"></p>
+      <p class="muted">交卷后不能再修改答案。系统将运行编程测试，并生成逐题解析。</p>
+      <div class="dialog-actions"><button value="cancel">继续作答</button><button value="submit" class="primary">确认交卷</button></div>
+    </form>
+  </dialog>
+  <script>window.EXAM_TOKEN = '__EXAM_TOKEN__'; if (location.protocol === 'file:') document.getElementById('app').innerHTML = '<section class="entry"><h2>打开本地考场</h2><p>请双击同目录的“启动考试.cmd”，打开支持编程运行和自动判分的考试页面。</p><p>若考场已经启动，<a href="http://127.0.0.1:18764/">点击这里进入考试</a>。</p></section>';</script>
+  <script src="editor.bundle.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
